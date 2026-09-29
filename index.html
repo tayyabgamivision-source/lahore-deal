@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lahore Deal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#f5c95a;--ink:#0a241b}*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:#f6efd9;font:600 15px Nunito,Verdana,sans-serif;background:radial-gradient(ellipse at 50% 20%,#1f7052 0,#0d3327 55%,#06170f 100%) fixed}
+h1,h2,h3,.fx{font-family:'Bowlby One','Arial Black',Impact,sans-serif;font-weight:400}
+button{font:800 15px Nunito,sans-serif;cursor:pointer;border:0;border-radius:10px;padding:10px 18px;background:linear-gradient(#ffd86e,#e9a91c);color:#2a1c00;box-shadow:0 3px 0 #8a6210,0 6px 14px #0006}
+button:active{transform:translateY(2px);box-shadow:0 1px 0 #8a6210}button.g{background:#24594a;color:#f6efd9;box-shadow:0 3px 0 #123a2f}button:disabled{opacity:.4}
+input{font:800 16px Nunito;padding:11px 14px;border-radius:10px;border:2px solid #2d6a57;background:#0a241b;color:#fff;width:100%}
+.wrap{max-width:1280px;margin:auto;padding:12px}.center{max-width:460px;margin:8vh auto;text-align:center;background:#0a241bcc;border:2px solid var(--gold);border-radius:18px;padding:28px;box-shadow:0 20px 60px #000a}
+.logo{font-size:46px;color:var(--gold);text-shadow:0 4px 0 #7a5a0c;line-height:1}.center p{opacity:.8}.center input{margin:6px 0}
+.code{font:44px 'Bowlby One';letter-spacing:8px;color:var(--gold)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+#bar{background:#0a241bcc;border:2px solid #2d6a57;border-radius:30px;padding:8px 18px}#bar.me{border-color:var(--gold);box-shadow:0 0 16px #f5c95a88}
+.pl{background:#0a241b99;border:2px solid #1f4d3f;border-radius:14px;padding:8px 12px;margin:8px 0}.pl.cur{border-color:var(--gold);box-shadow:0 0 18px #f5c95a66}
+.hd{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:19px 'Bowlby One';color:#fff;border:3px solid #fff8}
+.pips i{display:inline-block;width:15px;height:15px;border-radius:50%;border:2px solid var(--gold);margin-left:4px;background:#0006}.pips i.on{background:var(--gold)}
+#opps{display:flex;flex-wrap:wrap;gap:8px}.opp{flex:1 1 320px}.opp .card{zoom:.55}.opp .card,.opp .grp{cursor:default}
+.card{position:relative;width:118px;height:170px;border-radius:12px;border:3px solid #fff;background:#fbf7ea;color:#222;overflow:hidden;box-shadow:0 5px 12px #0008;flex:none;user-select:none;transition:transform .15s}
+.vc{position:absolute;top:5px;left:5px;width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid #222;font:800 12px/26px Nunito;text-align:center;font-style:normal;z-index:2;color:#222}
+.ch{min-height:42px;padding:6px 6px 4px 40px;font:13px/1.1 'Bowlby One','Arial Black',sans-serif;color:#fff;text-shadow:0 1px 2px #0009;display:flex;align-items:center}
+.cb{padding:6px 9px;font-size:11px;color:#333}.cb small{display:block;color:#777;margin:2px 0 3px}.rr{display:flex;justify-content:space-between;border-bottom:1px dashed #bbb;padding:3px 0;font-size:12px;font-weight:800}
+.big{font:50px 'Bowlby One';text-align:center;margin-top:34px;color:#2229}.cap{text-align:center;font:800 10px Nunito;color:#2229;letter-spacing:1px}
+.ac{display:grid;place-items:center;width:74px;height:74px;margin:10px auto 6px;border-radius:50%;background:#fff9;border:3px solid #fff;font-size:36px}
+.ds{margin:0;padding:0 8px;text-align:center;font-weight:800;font-size:11.5px;line-height:1.2;color:#fff;text-shadow:0 1px 2px #000a}
+.pat{background-image:repeating-linear-gradient(45deg,#ffffff18 0 4px,#0000 4px 8px)}
+.back{background:repeating-linear-gradient(45deg,#1c7a45 0 8px,#155c34 8px 16px);display:grid;place-items:center;text-align:center;color:var(--gold);font:16px/1.1 'Bowlby One'}
+#mid{display:flex;align-items:center;gap:16px;margin:8px 0}.tb{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;align-items:flex-start}
+.grp{display:flex;flex-direction:column}.grp .card+.card{margin-top:-128px}.grp em{font:800 12px Nunito;text-align:center;font-style:normal;margin-top:5px;color:var(--gold)}
+.grp.full .card{box-shadow:0 0 14px 3px #ffd54a}.mine .grp.flip .card{cursor:pointer}
+#hand{display:flex;justify-content:center;padding:34px 10px 10px;min-height:210px}
+#hand .card{margin-left:-30px;cursor:pointer;transform:rotate(var(--r)) translateY(var(--y))}#hand .card:first-child{margin-left:0}
+#hand .card:hover{transform:translateY(-34px) scale(1.12);z-index:9}
+#ov,#mn{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;z-index:20;padding:10px}#mn{z-index:30}
+.box{background:#0d3327;border:3px solid var(--gold);border-radius:16px;padding:18px;max-width:640px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 20px 60px #000}
+.box button{display:block;width:100%;margin:7px 0;text-align:left}.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.row .card{cursor:pointer}.row .card.sel{outline:4px solid var(--gold);transform:translateY(-8px)}
+#log{height:110px;overflow:auto;font-size:13px;background:#06170fcc;border-radius:10px;padding:8px 12px;margin-top:10px;color:#bfd6c6}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#a32a25;color:#fff;padding:10px 20px;border-radius:30px;z-index:40;display:none}
+.pl2{display:flex;align-items:center;gap:10px;background:#06170f99;border-radius:10px;padding:10px;margin:6px 0;text-align:left}
+</style></head><body><div id="root"></div><div id="ov"></div><div id="mn"></div><div id="toast"></div>
+<script>
+let COL,LAN=[],S=null,pid=localStorage.pid,room=localStorage.room,ES,sel=new Set(),selKey='';
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const post=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.json());
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
+async function act(o){const r=await post('/act',{room,pid,...o});if(r.err)toast(r.err)}
+const AC={'Pass Go':['#3fae49','🏁','Draw 2 cards'],'Deal Breaker':['#c9302c','💥','Steal a complete set'],'Just Say No':['#2f2f3d','🚫','Cancel an action played against you'],'Sly Deal':['#7d48c9','🕵️','Steal a property (not from a full set)'],'Forced Deal':['#e07b1f','🔁','Swap a property (neither in a full set)'],'Debt Collector':['#1f9bd6','💼','Force a player to pay you 5M'],"It's My Birthday":['#ec4a95','🎂','Every player pays you 2M'],'Double the Rent':['#2aa198','✖️2','Play with a Rent card to double it'],'House':['#7bbf3f','🏠','Full set: +3M rent'],'Hotel':['#d8402f','🏨','Full set with House: +4M rent']};
+const MC={1:'#f4e39a',2:'#f6b8cf',3:'#b8e2a6',4:'#a9d4f2',5:'#cbb3ec',10:'#f5a742'};
+const RB='linear-gradient(90deg,#e33,#f90,#fd0,#3b3,#39f,#93f)';
+const full=(p,c)=>p.props[c].length>=COL[c].s,nsets=p=>Object.keys(COL).filter(c=>full(p,c)).length,bankT=p=>p.bank.reduce((s,x)=>s+x.v,0);
+function rentOf(p,c){const n=Math.min(p.props[c].length,COL[c].s);if(!n)return 0;let v=COL[c].r[n-1];if(full(p,c)){if(p.ext[c].some(x=>x.n=='House'))v+=3;if(p.ext[c].some(x=>x.n=='Hotel'))v+=4}return v}
+function cardEl(c,click,cls=''){const vc=`<i class="vc">${c.v}M</i>`;let h='',bg='',st='';
+if(c.t=='prop'||c.t=='wild'||c.t=='rent'){let col,nm,b='';
+if(c.t=='prop'){col=COL[c.c].h;nm=c.n;b='<small>Properties / Rent</small>'+COL[c.c].r.map((r,i)=>`<div class="rr"><span>${i+1}${i+1==COL[c.c].s?' full set':''}</span><span>${r}M</span></div>`).join('')}
+else if(c.t=='wild'){nm=c.cs.length>2?'Wild Property':'Property Wild';col=c.cs.length>2?RB:`linear-gradient(105deg,${COL[c.cs[0]].h} 50%,${COL[c.cs[1]].h} 50%)`;b=c.cs.length>2?'<small>Counts as any colour. Worth nothing if banked.</small>':`<small>Use as either:</small><b>${COL[c.cs[0]].n}</b><br><b>${COL[c.cs[1]].n}</b>`}
+else{nm=c.wild?'Wild Rent':'Rent';col=c.wild?RB:`linear-gradient(105deg,${COL[c.cs[0]].h} 50%,${COL[c.cs[1]].h} 50%)`;bg='#7fd0f5';b=c.wild?'<small>Rent on any one colour, from ONE player</small>':`<small>Rent on ${c.cs.map(k=>COL[k].n).join(' or ')} from ALL players</small>`}
+const dk=c.t=='prop'&&(c.c=='yellow'||c.c=='lblue')?'color:#222;text-shadow:none;':'';
+h=`${vc}<div class="ch" style="background:${col};${dk}">${nm}</div><div class="cb">${b}</div>`}
+else if(c.t=='money'){bg=MC[c.v];h=`${vc}<div class="big">${c.v}</div><div class="cap">MILLION</div><div class="cap" style="margin-top:36px">LAHORE DEAL</div>`;cls+=' pat'}
+else{const a=AC[c.n];bg=a[0];cls+=' pat';h=`${vc}<div class="ch" style="font-size:12px">${esc(c.n)}</div><div class="ac">${a[1]}</div><p class="ds">${a[2]}</p>`}
+return `<div class="card ${cls}" style="${bg?'background:'+bg:''}" ${click?`onclick="${click}"`:''}>${h}</div>`}
+const avc=['#c9302c','#2f7fd6','#8a4fd0','#e07b1f','#2e9c56'];
+function tbl(p,mine){const can=mine&&S.turn==pid&&!S.pend;
+return '<div class="tb">'+Object.keys(COL).filter(c=>p.props[c].length).map(c=>{const a=p.props[c],f=full(p,c),fl=can&&a.some(x=>x.t=='wild');
+return `<div class="grp${f?' full':''}${fl?' flip':''}">${a.map(x=>cardEl(x,x.t=='wild'&&can?`flipMenu(${x.id})`:'')).join('')}${p.ext[c].map(x=>cardEl(x)).join('')}<em>${COL[c].n} ${a.length}/${COL[c].s}${f?' ✔ · rent '+rentOf(p,c)+'M':''}</em></div>`}).join('')+(p.bank.length?`<div class="grp">${p.bank.slice(-5).map(x=>cardEl(x)).join('')}<em>Bank · ${bankT(p)}M · ${p.bank.length} cards</em></div>`:'')+'</div>'}
+function pv(p,i,mine){const s=nsets(p);return `<div class="pl ${S.turn==p.id?'cur':''} ${mine?'mine':'opp'}"><div class="hd"><div class="av" style="background:${avc[i%5]}">${esc(p.name[0]||'?').toUpperCase()}</div><b style="font-size:17px">${esc(p.name)}${mine?' (you)':''}</b><span>🃏 ${p.hn}</span><span>💰 ${bankT(p)}M</span><span class="pips">${[0,1,2].map(k=>`<i class="${k<s?'on':''}"></i>`).join('')}</span></div>${tbl(p,mine)}</div>`}
+function draw(){const r=$('#root');if(!S){landing();return}if(S.st=='lobby')return lobby();
+const ps=S.players,idx=ps.findIndex(p=>p.id==pid),me=ps[idx],cur=ps.find(p=>p.id==S.turn),q=S.pend,nm=id=>(ps.find(p=>p.id==id)||{}).name;
+let bar=q?(q.wait?`${esc(q.name)}: waiting for ${esc(nm(q.wait))}…`:''):S.turn==pid?`Your turn · ${S.plays} play${S.plays==1?'':'s'} left${S.discarding?' · discard to 7':''}`:`${esc(cur.name)}'s turn`;
+const n=S.hand.length;
+r.innerHTML=`<div class="wrap"><div class="top"><h2 class="logo" style="font-size:30px;margin:0">LAHORE DEAL</h2><div id="bar" class="${S.turn==pid&&!q?'me':''}">${bar}</div><span>Room <b>${S.code}</b></span></div>
+<div id="opps">${ps.map((p,i)=>p.id==pid?'':pv(p,i,0)).join('')}</div>
+<div id="mid"><div class="card back" style="cursor:default">LAHORE<br>DEAL<br><small style="font:800 11px Nunito">${S.deckN} cards</small></div>${S.top?cardEl(S.top):'<div class="card" style="background:#0004;border-style:dashed"></div>'}<div style="flex:1">${S.turn==pid&&!q&&!S.discarding?`<button onclick="act({type:'end'})">End turn</button> <span style="opacity:.7">Draw happens automatically. Play up to 3 cards.</span>`:''}</div></div>
+${pv(me,idx,1)}<div id="hand">${S.hand.map((c,i)=>{const m=(n-1)/2;return cardEl(c,`useCard(${c.id})`).replace('class="card','style="--r:'+((i-m)*3)+'deg;--y:'+(Math.abs(i-m)*4)+'px" class="card')}).join('')}</div>
+<div id="log">${S.log.map(esc).join('<br>')}</div></div>`;
+$('#log').scrollTop=1e9;prompt()}
+function prompt(){const o=$('#ov'),q=S.pend,me=S.players.find(p=>p.id==pid),nm=id=>esc((S.players.find(p=>p.id==id)||{}).name);let h='';
+if(S.st=='over'){h=`<h2 class="logo" style="text-align:center">🏆 ${nm(S.winner)} wins!</h2><p style="text-align:center">First to 3 complete sets.</p><button onclick="localStorage.clear();location.href='/'">Back to menu</button>`}
+else if(S.discarding&&S.turn==pid){h=`<h3>Too many cards — discard down to 7</h3><div class="row">${S.hand.map(c=>cardEl(c,`act({type:'discard',id:${c.id}})`)).join('')}</div>`}
+else if(q&&q.wait==pid){
+if(q.stage=='resp'){const tgt=q.depth%2==0;h=`<h3>${tgt?`${nm(q.actor)} played ${esc(q.name)}!`:`${nm(q.cur)} played Just Say No!`}</h3><p>${tgt?esc(q.text||'')+(q.amt?` — you owe ${q.amt}M`:''):'Counter with your own Just Say No, or accept.'}</p><button onclick="act({type:'jsn'})">🚫 Just Say No</button><button class="g" onclick="act({type:'accept'})">${tgt?'Accept':'Accept their Just Say No'}</button>`}
+else{const key=q.actor+q.name+q.cur+q.amt;if(key!=selKey){selKey=key;sel=new Set()}const all=[...me.bank,...Object.keys(COL).flatMap(c=>[...me.props[c],...me.ext[c]])],sum=all.filter(x=>sel.has(x.id)).reduce((s,x)=>s+x.v,0);
+h=`<h3>Pay ${nm(q.actor)} ${q.amt}M</h3><p>Tap cards to pay with. No change is given. Selected: <b>${sum}M</b></p><div class="row">${all.map(x=>cardEl(x,`tp(${x.id})`,sel.has(x.id)?'sel':'')).join('')}</div><button ${sum>=q.amt||sel.size==all.length?'':'disabled'} onclick="act({type:'pay',ids:[...sel]})">Pay</button>`}}
+o.innerHTML=h?`<div class="box">${h}</div>`:'';o.style.display=h?'flex':'none'}
+function tp(id){sel.has(id)?sel.delete(id):sel.add(id);prompt()}
+function ask(title,opts){return new Promise(res=>{const m=$('#mn');m.innerHTML=`<div class="box"><h3>${esc(title)}</h3></div>`;const b=m.firstChild;
+opts.forEach(o=>{const x=document.createElement('button');x.innerHTML=o.l;x.onclick=()=>{m.style.display='none';res(o.v)};b.appendChild(x)});
+const c=document.createElement('button');c.className='g';c.textContent='Cancel';c.onclick=()=>{m.style.display='none';res(null)};b.appendChild(c);m.style.display='flex'})}
+async function flipMenu(id){const me=S.players.find(p=>p.id==pid),c=Object.values(me.props).flat().find(x=>x.id==id);
+const k=await ask('Move wild property to…',c.cs.filter(k=>k!=c.c).map(k=>({l:COL[k].n,v:k})));if(k)act({type:'flip',id,color:k})}
+async function useCard(id){if(S.turn!=pid||S.pend||S.discarding)return toast(S.turn!=pid?"It's not your turn":'Wait for the action to finish');if(S.plays<1)return toast('No plays left — end your turn');
+const c=S.hand.find(x=>x.id==id),ps=S.players,me=ps.find(p=>p.id==pid),oth=ps.filter(p=>p.id!=pid),o=[],bank={l:`Bank it (${c.v}M)`,v:{mode:'bank'}};
+if(c.t=='money')o.push(bank);if(c.t=='prop')o.push({l:'Play on table',v:{mode:'prop',color:c.c}});
+if(c.t=='wild')c.cs.forEach(k=>o.push({l:'Play as '+COL[k].n,v:{mode:'prop',color:k}}));
+if(c.t=='rent'){c.cs.filter(k=>me.props[k].length).forEach(k=>o.push({l:`Charge rent: ${COL[k].n} (${rentOf(me,k)}M)`,v:{mode:'rent',color:k}}));o.push(bank)}
+if(c.t=='act'){if(!['Just Say No','Double the Rent'].includes(c.n))o.push({l:'Play: '+esc(c.n),v:{mode:'act'}});o.push(bank)}
+const ch=await ask(c.n,o);if(!ch)return;const x={type:'play',id,...ch};
+const pickP=async()=>{if(oth.length==1)return oth[0].id;return ask('Choose a player',oth.map(p=>({l:esc(p.name),v:p.id})))};
+const props=(pl,any)=>Object.keys(COL).filter(k=>!full(pl,k)).flatMap(k=>pl.props[k].map(z=>({z,pl})));
+if(ch.mode=='rent'){if(c.wild){x.target=await pickP();if(!x.target)return}
+const ds=S.hand.filter(h=>h.n=='Double the Rent'),mx=Math.min(ds.length,S.plays-1);
+if(mx>0){const d=await ask('Add Double the Rent? (each uses 1 play)',Array.from({length:mx+1},(_,i)=>({l:i?`Yes, ×${2**i}`:'No',v:i})));if(d===null)return;x.dbls=ds.slice(0,d).map(z=>z.id)}}
+if(ch.mode=='act'){const n=c.n;
+if(n=='Debt Collector'){x.target=await pickP();if(!x.target)return}
+else if(n=='Sly Deal'||n=='Forced Deal'){const l=oth.flatMap(pl=>props(pl));if(!l.length)return toast('No stealable properties');
+const t=await ask(n=='Sly Deal'?'Steal which property?':'Take which property?',l.map(e=>({l:`${esc(e.z.n)} <small>(${esc(e.pl.name)})</small>`,v:e})));if(!t)return;x.target=t.pl.id;x.their=t.z.id;
+if(n=='Forced Deal'){const m=props(me);if(!m.length)return toast('You have nothing to swap');const g=await ask('Give which of your properties?',m.map(e=>({l:esc(e.z.n),v:e.z.id})));if(!g)return;x.mine=g}}
+else if(n=='Deal Breaker'){const l=oth.flatMap(pl=>Object.keys(COL).filter(k=>full(pl,k)).map(k=>({l:`${COL[k].n} set <small>(${esc(pl.name)})</small>`,v:{t:pl.id,k}})));if(!l.length)return toast('No complete sets to steal');const t=await ask('Steal which set?',l);if(!t)return;x.target=t.t;x.color=t.k}
+else if(n=='House'||n=='Hotel'){const l=Object.keys(COL).filter(k=>k!='rail'&&k!='util'&&full(me,k)&&(n=='House'?!me.ext[k].some(z=>z.n=='House'):me.ext[k].some(z=>z.n=='House')&&!me.ext[k].some(z=>z.n=='Hotel'))).map(k=>({l:COL[k].n,v:k}));if(!l.length)return toast(n=='House'?'Needs a full set (not Railway/Utility)':'Needs a full set with a House');const k=await ask('Build on which set?',l);if(!k)return;x.color=k}}
+act(x)}
+function landing(){const q=new URLSearchParams(location.search).get('room')||'';$('#root').innerHTML=`<div class="center"><div class="logo">LAHORE<br>DEAL</div><p>Collect rent. Steal properties. Be first to 3 complete sets.</p>
+<input id="nm" maxlength="14" placeholder="Your name" value="${esc(localStorage.name||'')}"><button style="width:100%;margin:8px 0" onclick="go('/create')">Create a game</button>
+<p>— or join friends —</p><input id="cd" maxlength="4" placeholder="Room code" value="${esc(q)}" style="text-transform:uppercase;text-align:center;letter-spacing:6px"><button class="g" style="width:100%;margin-top:8px" onclick="go('/join')">Join game</button></div>`}
+async function go(u){const name=$('#nm').value.trim();if(!name)return toast('Enter your name');localStorage.name=name;const r=await post(u,{name,code:$('#cd').value});if(r.err)return toast(r.err);pid=localStorage.pid=r.pid;room=localStorage.room=r.code;connect()}
+function lobby(){const ps=S.players;$('#root').innerHTML=`<div class="center"><div class="logo" style="font-size:30px">LAHORE DEAL</div><p>Room code</p><div class="code">${S.code}</div>
+<p>Send friends this link (or the code):</p><input readonly value="${(location.hostname=='localhost'&&LAN[0]?'http://'+LAN[0]+':'+location.port:location.origin)}/?room=${S.code}" onclick="this.select()">
+<div style="margin:14px 0">${ps.map((p,i)=>`<div class="pl2"><div class="av" style="background:${avc[i]}">${esc(p.name[0]).toUpperCase()}</div><b>${esc(p.name)}</b>${p.id==S.host?'<span style="margin-left:auto;color:var(--gold)">host</span>':''}</div>`).join('')}</div>
+${S.host==pid?`<button style="width:100%" ${ps.length<2?'disabled':''} onclick="act({type:'start'})">Start game (${ps.length}/5 players)</button>`:'<p>Waiting for the host to start…</p>'}</div>`}
+function connect(){if(ES)ES.close();ES=new EventSource(`/events?room=${room}&pid=${pid}`);ES.onmessage=e=>{S=JSON.parse(e.data);draw()};ES.onerror=()=>{if(ES.readyState==2){localStorage.clear();pid=room=null;S=null;draw()}}}
+fetch('/cfg').then(r=>r.json()).then(j=>{COL=j.COL;LAN=j.lan||[];pid&&room?connect():draw()});
+</script></body></html>
