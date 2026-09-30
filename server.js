@@ -18,8 +18,8 @@ const full=(p,c)=>p.props[c].length>=COL[c].s,nsets=p=>ALL.filter(c=>full(p,c)).
 const assets=p=>[...p.bank,...ALL.flatMap(c=>[...p.props[c],...p.ext[c]])];
 const colOf=(p,id)=>ALL.find(c=>p.props[c].some(x=>x.id==id));
 function rentOf(p,c){const n=Math.min(p.props[c].length,COL[c].s);if(!n)return 0;let v=COL[c].r[n-1];if(full(p,c)){if(p.ext[c].some(x=>x.n=='House'))v+=3;if(p.ext[c].some(x=>x.n=='Hotel'))v+=4}return v}
-function draw(r,p,n){for(let i=0;i<n;i++){if(!r.deck.length){r.deck=shuffle(r.disc);r.disc=[]}if(r.deck.length)p.hand.push(r.deck.pop())}}
-function startTurn(r){const p=r.players[r.turn];r.plays=3;r.discarding=false;draw(r,p,p.hand.length?2:5);log(r,`— ${p.name}'s turn —`)}
+function draw(r,p,n){for(let i=0;i<n;i++){if(!r.deck.length){r.deck=shuffle(r.disc);r.disc=[]}if(r.deck.length){const c=r.deck.pop();p.hand.push(c);(r.newIds=r.newIds||[]).push(c.id)}}}
+function startTurn(r){const p=r.players[r.turn];r.plays=3;r.discarding=false;r.newIds=[];draw(r,p,p.hand.length?2:5);log(r,`— ${p.name}'s turn —`)}
 function take(p,id){let i=p.bank.findIndex(x=>x.id==id);if(i>=0)return{card:p.bank.splice(i,1)[0],z:'bank'};
 for(const c of ALL){i=p.props[c].findIndex(x=>x.id==id);if(i>=0)return{card:p.props[c].splice(i,1)[0],z:'prop',c};i=p.ext[c].findIndex(x=>x.id==id);if(i>=0)return{card:p.ext[c].splice(i,1)[0],z:'ext',c}}return null}
 function fix(p){for(const c of ALL)if(!full(p,c)&&p.ext[c].length){p.bank.push(...p.ext[c]);p.ext[c]=[]}}
@@ -76,7 +76,7 @@ if(n=='Deal Breaker'){if(!okT||!ALL.includes(b.color)||!full(T,b.color))return'P
 if(n=='House'||n=='Hotel'){const k=b.color;if(!ALL.includes(k)||k=='rail'||k=='util'||!full(p,k))return'Needs a full set';const h=p.ext[k].some(x=>x.n=='House'),H=p.ext[k].some(x=>x.n=='Hotel');
 if(n=='House'&&h||n=='Hotel'&&(!h||H))return'Not allowed here';use();p.ext[k].push(c);log(r,`${p.name} built a ${n} on ${COL[k].n}`);return}
 return'Cannot play that'}
-function view(r,pid){const me=getP(r,pid),q=r.pend;return{code:r.code,host:r.host,st:r.st,me:pid,hand:me?me.hand:[],deckN:r.deck.length,top:r.disc[r.disc.length-1]||null,turn:r.players[r.turn]&&r.players[r.turn].id,plays:r.plays,discarding:r.discarding,winner:r.winner,log:r.log.slice(-30),
+function view(r,pid){const me=getP(r,pid),q=r.pend;return{code:r.code,host:r.host,st:r.st,me:pid,hand:me?me.hand:[],deckN:r.deck.length,top:r.disc[r.disc.length-1]||null,turn:r.players[r.turn]&&r.players[r.turn].id,plays:r.plays,newIds:r.newIds||[],discarding:r.discarding,winner:r.winner,log:r.log.slice(-30),
 pend:q&&{kind:q.kind,name:q.name,actor:q.actor,cur:q.cur,stage:q.stage,depth:q.depth,amt:q.amt,wait:q.wait,text:q.text},
 players:r.players.map(p=>({id:p.id,name:p.name,hn:p.hand.length,bank:p.bank,props:p.props,ext:p.ext}))}}
 function bcast(r){for(const [pid,res] of r.clients)res.write('data: '+JSON.stringify(view(r,pid))+'\n\n')}

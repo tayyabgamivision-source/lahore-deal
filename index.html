@@ -37,28 +37,44 @@ input{font:800 16px Nunito;padding:11px 14px;border-radius:10px;border:2px solid
 #log{height:110px;overflow:auto;font-size:13px;background:#06170fcc;border-radius:10px;padding:8px 12px;margin-top:10px;color:#bfd6c6}
 #toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#a32a25;color:#fff;padding:10px 20px;border-radius:30px;z-index:40;display:none}
 .pl2{display:flex;align-items:center;gap:10px;background:#06170f99;border-radius:10px;padding:10px;margin:6px 0;text-align:left}
+
+.card{width:124px;height:180px}.card::after{content:'';position:absolute;inset:3px;border:1.5px solid #0002;border-radius:8px;pointer-events:none}
+.grp .card+.card{margin-top:-138px}
+.atitle{position:absolute;top:7px;left:42px;right:6px;font:12.5px/1.15 'Bowlby One',sans-serif;color:#fff;text-shadow:0 2px 3px #000b,0 0 2px #000}
+.card .ac{position:absolute;top:46px;left:50%;margin:0 0 0 -37px;background:#fffc;box-shadow:0 3px 8px #0004}
+.adesc{position:absolute;left:8px;right:8px;bottom:9px;background:#fffdf3;color:#26262b;border-radius:8px;padding:6px 6px;text-align:center;font:800 11.5px/1.25 Nunito,sans-serif;box-shadow:0 2px 4px #0003}
+.brand{position:absolute;bottom:12px;left:0;right:0;text-align:center;font:9px 'Bowlby One';letter-spacing:1.5px;color:#0006}
+.big{margin-top:44px;font-size:58px;color:#26262b}.cap{font-size:11px;color:#26262b;letter-spacing:2px}
+.ch{min-height:46px;font-size:13.5px}.cb{font-size:12px}.rr{font-size:13px}
+.pat{background-image:repeating-linear-gradient(135deg,#ffffff1f 0 5px,#0000 5px 10px)}
+
+.ch,.atitle{overflow:hidden;word-break:break-word;line-height:1.1}.ch{height:46px;min-height:46px}.atitle{max-height:36px}
+.card .ac{width:64px;height:64px;margin-left:-32px;font-size:32px;top:48px}
+.adesc{font-size:12px;line-height:1.2}.cb small{line-height:1.25}
+.card.new{box-shadow:0 0 0 3px #5dff9d,0 0 22px 6px #5dff9d99}.card.new::before{content:'NEW';position:absolute;top:0;right:0;z-index:3;background:#2ecc71;color:#053;font:900 10px Nunito,sans-serif;padding:3px 7px;border-radius:0 8px 0 8px}
 </style></head><body><div id="root"></div><div id="ov"></div><div id="mn"></div><div id="toast"></div>
 <script>
 let COL,LAN=[],S=null,pid=localStorage.pid,room=localStorage.room,ES,sel=new Set(),selKey='';
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const post=(u,b)=>fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(r=>r.json());
-const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2500)};
+const toast=(m,bg)=>{const t=$('#toast');t.style.background=bg||'#a32a25';t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',3500)};
 async function act(o){const r=await post('/act',{room,pid,...o});if(r.err)toast(r.err)}
-const AC={'Pass Go':['#3fae49','🏁','Draw 2 cards'],'Deal Breaker':['#c9302c','💥','Steal a complete set'],'Just Say No':['#2f2f3d','🚫','Cancel an action played against you'],'Sly Deal':['#7d48c9','🕵️','Steal a property (not from a full set)'],'Forced Deal':['#e07b1f','🔁','Swap a property (neither in a full set)'],'Debt Collector':['#1f9bd6','💼','Force a player to pay you 5M'],"It's My Birthday":['#ec4a95','🎂','Every player pays you 2M'],'Double the Rent':['#2aa198','✖️2','Play with a Rent card to double it'],'House':['#7bbf3f','🏠','Full set: +3M rent'],'Hotel':['#d8402f','🏨','Full set with House: +4M rent']};
+const AC={'Pass Go':['#3fae49','🏁','Draw 2 cards'],'Deal Breaker':['#c9302c','💥','Steal a complete set'],'Just Say No':['#2f2f3d','🚫','Cancel any action against you'],'Sly Deal':['#7d48c9','🕵️','Steal one single property'],'Forced Deal':['#e07b1f','🔁','Swap a property with a player'],'Debt Collector':['#1f9bd6','💼','Collect 5M from a player'],"It's My Birthday":['#ec4a95','🎂','Everyone pays you 2M'],'Double the Rent':['#2aa198','✖️2','Doubles a Rent card'],'House':['#7bbf3f','🏠','Full set: +3M rent'],'Hotel':['#d8402f','🏨','Full set + House: +4M']};
 const MC={1:'#f4e39a',2:'#f6b8cf',3:'#b8e2a6',4:'#a9d4f2',5:'#cbb3ec',10:'#f5a742'};
 const RB='linear-gradient(90deg,#e33,#f90,#fd0,#3b3,#39f,#93f)';
 const full=(p,c)=>p.props[c].length>=COL[c].s,nsets=p=>Object.keys(COL).filter(c=>full(p,c)).length,bankT=p=>p.bank.reduce((s,x)=>s+x.v,0);
 function rentOf(p,c){const n=Math.min(p.props[c].length,COL[c].s);if(!n)return 0;let v=COL[c].r[n-1];if(full(p,c)){if(p.ext[c].some(x=>x.n=='House'))v+=3;if(p.ext[c].some(x=>x.n=='Hotel'))v+=4}return v}
-function cardEl(c,click,cls=''){const vc=`<i class="vc">${c.v}M</i>`;let h='',bg='',st='';
+const fz=t=>String(t).length<=9?14:String(t).length<=13?12:String(t).length<=17?10.5:9.5;
+function cardEl(c,click,cls='',ex=''){const vc=`<i class="vc">${c.v}M</i>`;let h='',bg='';
 if(c.t=='prop'||c.t=='wild'||c.t=='rent'){let col,nm,b='';
 if(c.t=='prop'){col=COL[c.c].h;nm=c.n;b='<small>Properties / Rent</small>'+COL[c.c].r.map((r,i)=>`<div class="rr"><span>${i+1}${i+1==COL[c.c].s?' full set':''}</span><span>${r}M</span></div>`).join('')}
 else if(c.t=='wild'){nm=c.cs.length>2?'Wild Property':'Property Wild';col=c.cs.length>2?RB:`linear-gradient(105deg,${COL[c.cs[0]].h} 50%,${COL[c.cs[1]].h} 50%)`;b=c.cs.length>2?'<small>Counts as any colour. Worth nothing if banked.</small>':`<small>Use as either:</small><b>${COL[c.cs[0]].n}</b><br><b>${COL[c.cs[1]].n}</b>`}
-else{nm=c.wild?'Wild Rent':'Rent';col=c.wild?RB:`linear-gradient(105deg,${COL[c.cs[0]].h} 50%,${COL[c.cs[1]].h} 50%)`;bg='#7fd0f5';b=c.wild?'<small>Rent on any one colour, from ONE player</small>':`<small>Rent on ${c.cs.map(k=>COL[k].n).join(' or ')} from ALL players</small>`}
+else{nm=c.wild?'Wild Rent':'Rent';col=c.wild?RB:`linear-gradient(105deg,${COL[c.cs[0]].h} 50%,${COL[c.cs[1]].h} 50%)`;bg='#8fd6f7';b=c.wild?'<small>Rent on any one colour, from ONE player</small>':`<small>Rent on ${c.cs.map(k=>COL[k].n).join(' or ')} from ALL players</small>`}
 const dk=c.t=='prop'&&(c.c=='yellow'||c.c=='lblue')?'color:#222;text-shadow:none;':'';
-h=`${vc}<div class="ch" style="background:${col};${dk}">${nm}</div><div class="cb">${b}</div>`}
-else if(c.t=='money'){bg=MC[c.v];h=`${vc}<div class="big">${c.v}</div><div class="cap">MILLION</div><div class="cap" style="margin-top:36px">LAHORE DEAL</div>`;cls+=' pat'}
-else{const a=AC[c.n];bg=a[0];cls+=' pat';h=`${vc}<div class="ch" style="font-size:12px">${esc(c.n)}</div><div class="ac">${a[1]}</div><p class="ds">${a[2]}</p>`}
-return `<div class="card ${cls}" style="${bg?'background:'+bg:''}" ${click?`onclick="${click}"`:''}>${h}</div>`}
+h=`${vc}<div class="ch" style="background:${col};${dk}font-size:${fz(nm)}px">${nm}</div><div class="cb">${b}</div>`}
+else if(c.t=='money'){bg=MC[c.v];h=`${vc}<div class="big">${c.v}</div><div class="cap">MILLION</div><div class="brand">LAHORE DEAL</div>`;cls+=' pat'}
+else{const a=AC[c.n];bg=a[0];cls+=' pat';h=`${vc}<div class="atitle" style="font-size:${fz(c.n)}px">${esc(c.n)}</div><div class="ac">${a[1]}</div><div class="adesc">${a[2]}</div>`}
+return `<div class="card ${cls}" style="${bg?'background:'+bg+';':''}${ex}" ${click?`onclick="${click}"`:''}>${h}</div>`}
 const avc=['#c9302c','#2f7fd6','#8a4fd0','#e07b1f','#2e9c56'];
 function tbl(p,mine){const can=mine&&S.turn==pid&&!S.pend;
 return '<div class="tb">'+Object.keys(COL).filter(c=>p.props[c].length).map(c=>{const a=p.props[c],f=full(p,c),fl=can&&a.some(x=>x.t=='wild');
@@ -71,7 +87,7 @@ const n=S.hand.length;
 r.innerHTML=`<div class="wrap"><div class="top"><h2 class="logo" style="font-size:30px;margin:0">LAHORE DEAL</h2><div id="bar" class="${S.turn==pid&&!q?'me':''}">${bar}</div><span>Room <b>${S.code}</b></span></div>
 <div id="opps">${ps.map((p,i)=>p.id==pid?'':pv(p,i,0)).join('')}</div>
 <div id="mid"><div class="card back" style="cursor:default">LAHORE<br>DEAL<br><small style="font:800 11px Nunito">${S.deckN} cards</small></div>${S.top?cardEl(S.top):'<div class="card" style="background:#0004;border-style:dashed"></div>'}<div style="flex:1">${S.turn==pid&&!q&&!S.discarding?`<button onclick="act({type:'end'})">End turn</button> <span style="opacity:.7">Draw happens automatically. Play up to 3 cards.</span>`:''}</div></div>
-${pv(me,idx,1)}<div id="hand">${S.hand.map((c,i)=>{const m=(n-1)/2;return cardEl(c,`useCard(${c.id})`).replace('class="card','style="--r:'+((i-m)*3)+'deg;--y:'+(Math.abs(i-m)*4)+'px" class="card')}).join('')}</div>
+${pv(me,idx,1)}<div id="hand">${S.hand.map((c,i)=>{const m=(n-1)/2;return cardEl(c,`useCard(${c.id})`,(S.turn==pid&&(S.newIds||[]).includes(c.id)?'new':''),'--r:'+((i-m)*3)+'deg;--y:'+(Math.abs(i-m)*4)+'px;')}).join('')}</div>
 <div id="log">${S.log.map(esc).join('<br>')}</div></div>`;
 $('#log').scrollTop=1e9;prompt()}
 function prompt(){const o=$('#ov'),q=S.pend,me=S.players.find(p=>p.id==pid),nm=id=>esc((S.players.find(p=>p.id==id)||{}).name);let h='';
@@ -116,6 +132,6 @@ function lobby(){const ps=S.players;$('#root').innerHTML=`<div class="center"><d
 <p>Send friends this link (or the code):</p><input readonly value="${(location.hostname=='localhost'&&LAN[0]?'http://'+LAN[0]+':'+location.port:location.origin)}/?room=${S.code}" onclick="this.select()">
 <div style="margin:14px 0">${ps.map((p,i)=>`<div class="pl2"><div class="av" style="background:${avc[i]}">${esc(p.name[0]).toUpperCase()}</div><b>${esc(p.name)}</b>${p.id==S.host?'<span style="margin-left:auto;color:var(--gold)">host</span>':''}</div>`).join('')}</div>
 ${S.host==pid?`<button style="width:100%" ${ps.length<2?'disabled':''} onclick="act({type:'start'})">Start game (${ps.length}/5 players)</button>`:'<p>Waiting for the host to start…</p>'}</div>`}
-function connect(){if(ES)ES.close();ES=new EventSource(`/events?room=${room}&pid=${pid}`);ES.onmessage=e=>{S=JSON.parse(e.data);draw()};ES.onerror=()=>{if(ES.readyState==2){localStorage.clear();pid=room=null;S=null;draw()}}}
+function connect(){if(ES)ES.close();ES=new EventSource(`/events?room=${room}&pid=${pid}`);ES.onmessage=e=>{const pt=S&&S.turn;S=JSON.parse(e.data);if(S.st=='play'&&S.turn==pid&&pt!=pid){const k=(S.newIds||[]).length;toast(`Your turn! You drew ${k} card${k==1?'':'s'}`,'#1f8f4e')}draw()};ES.onerror=()=>{if(ES.readyState==2){localStorage.clear();pid=room=null;S=null;draw()}}}
 fetch('/cfg').then(r=>r.json()).then(j=>{COL=j.COL;LAN=j.lan||[];pid&&room?connect():draw()});
 </script></body></html>
